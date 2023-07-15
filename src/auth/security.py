@@ -1,0 +1,51 @@
+from datetime import datetime, timedelta
+from jose import jwt, JWTError
+
+import bcrypt
+from passlib.context import CryptContext
+
+from src.config import settings
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+def generate_salt():
+    return bcrypt.gensalt().decode()
+
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
+
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
+
+
+def create_token(data: dict, expire: datetime, token_sub: str) -> str:
+    to_encode = data.copy()
+    to_encode.update({"exp": expire, "sub": token_sub})
+    print(settings.secret_key.get_secret_value(), settings.algorithm_jwt)
+    encoded_jwt = jwt.encode(to_encode, settings.secret_key.get_secret_value(), algorithm=settings.algorithm_jwt)
+
+    return encoded_jwt
+
+
+def create_access_token(*, data: dict, expires_delta: timedelta | None = None) -> str:
+    print("access", data)
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=settings.access_token_expire_minutes)
+    token = create_token(data, expire, settings.access_token_jwt_subject)
+
+    return token
+
+
+def create_refresh_token(*, data: dict, expires_delta: timedelta | None = None) -> str:
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=settings.refresh_token_expire_minutes)
+    token = create_token(data, expire, settings.refresh_token_jwt_subject)
+
+    return token
