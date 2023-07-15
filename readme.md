@@ -38,9 +38,11 @@ alembic upgrade heads
 ```
 
 7) Запустить start_server.py
+доки по /docs
+админ панель: /admin
 
 
-8) Тесты (на данный момент недоделаны)
+9) Тесты (на данный момент недоделаны)
 ```commandline
     pytest
     или 
