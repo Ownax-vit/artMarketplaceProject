@@ -37,10 +37,8 @@ alembic revision --autogenerate -m "init"
 alembic upgrade heads
 ```
 
-7) Запустить 
-```commandline
-    python start_server.py
-```
+7) Запустить start_server.py
+
 
 8) Тесты (на данный момент недоделаны)
 ```commandline
