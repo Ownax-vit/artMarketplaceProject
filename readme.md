@@ -28,7 +28,7 @@ python -m venv venv
 ```
 pip install -r requirements.txt
 ```
-5) Указать переменные окружения (полный список в src/config Settings) 
+5) Указать переменные окружения в файле .env (полный список в src/config Settings). 
 Обязательно данные БД
 
 6) Применить миграции
