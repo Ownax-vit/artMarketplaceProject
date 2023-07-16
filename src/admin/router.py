@@ -25,6 +25,7 @@ class ProductAdmin(ModelView, model=Product):
     column_list = [Product.name, Product.slug_name,
                    Product.price, Product.basket, Product.url_image_large,
                    Product.url_image_small, Product.url_image_medium, Product.id, ]
+    form_excluded_columns = [Product.slug_name]
 
 
 class CategoryAdmin(ModelView, model=Category):
@@ -34,6 +35,7 @@ class CategoryAdmin(ModelView, model=Category):
 
     column_list = [Category.name, Category.slug_name,
                    Category.subcategories, Category.url_image, Category.id, ]
+    form_excluded_columns = [Category.slug_name]
 
 
 class SubcategoryAdmin(ModelView, model=Subcategory):
@@ -43,6 +45,7 @@ class SubcategoryAdmin(ModelView, model=Subcategory):
 
     column_list = [Subcategory.name, Subcategory.slug_name, Subcategory.category,
                    Subcategory.url_image, Subcategory.id, ]
+    form_excluded_columns = [Subcategory.slug_name]
 
 
 class BasketAdmin(ModelView, model=BasketItem):

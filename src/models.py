@@ -12,6 +12,8 @@ from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy.orm import as_declarative
 from sqlalchemy.orm import validates
 
+from src.utils import generate_slug_by_name
+
 
 @as_declarative()
 class Base:
@@ -87,14 +89,15 @@ class NamingMixin:
     __table_args__ = (
         CheckConstraint('char_length(name) > 4',
                         name='name_min_length'),
-        CheckConstraint('char_length(slug_name) > 4',
-                        name='slug_name_min_length'),
+
     )
 
-    @validates("name", "slug_name")
-    def validate_name(self, key, name):
+    @validates("name")
+    def generate_slug(self, key, name):
         if len(name) <= 4:
             raise ValueError('Name too short')
+        slug = generate_slug_by_name(name)
+        self.slug_name = slug
         return name
 
 
