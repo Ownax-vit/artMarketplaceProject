@@ -24,14 +24,12 @@ def get_password_hash(password):
 def create_token(data: dict, expire: datetime, token_sub: str) -> str:
     to_encode = data.copy()
     to_encode.update({"exp": expire, "sub": token_sub})
-    print(settings.secret_key.get_secret_value(), settings.algorithm_jwt)
     encoded_jwt = jwt.encode(to_encode, settings.secret_key.get_secret_value(), algorithm=settings.algorithm_jwt)
 
     return encoded_jwt
 
 
 def create_access_token(*, data: dict, expires_delta: timedelta | None = None) -> str:
-    print("access", data)
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:

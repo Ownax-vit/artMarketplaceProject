@@ -6,6 +6,10 @@ from pydantic import SecretStr
 
 class Settings(BaseSettings):
     app_name: str = "Marketplace API"
+    admin_login: str = "Admin"
+    admin_email: str
+    admin_pass: str
+
     db_host: str = "localhost"
     db_port: str
     db_user: str

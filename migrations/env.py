@@ -10,7 +10,6 @@ from src.config import settings
 from src.models import Base
 from src.auth.models import *
 from src.marketplace.models import *
-
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -30,6 +29,7 @@ if config.config_file_name is not None:
 # add your model's MetaData object here
 # for 'autogenerate' support
 target_metadata = Base.metadata
+
 
 
 def run_migrations_offline() -> None:

@@ -19,9 +19,8 @@ class AdminAuth(AuthenticationBackend):
         try:
             async with async_session_maker() as session:
                 user = await check_user_in_login(UserLogin(login=login, password=password), session)
-                # if not user.is_admin:
-                #     return False
-                # TODO ограничить доступ к админке (предварительно создавать админа)
+                if not user.is_admin:
+                    return False
         except ValidationError:
             return False
         except HTTPException:

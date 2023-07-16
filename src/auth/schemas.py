@@ -37,7 +37,7 @@ class UserSchema(UserBase):
         from_attributes = True
 
 
-class UserDB(UserCreate):
+class UserDB(UserBase):
     id: UUID = Field(default_factory=uuid4)
     is_admin: bool = Field(default=False)
     hashed_password: str = Field(default="")
