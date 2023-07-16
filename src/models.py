@@ -1,6 +1,7 @@
 from typing import Optional
 from uuid import UUID, uuid4
 
+import validators
 from asyncpg import UniqueViolationError
 from fastapi import HTTPException, status
 from pydantic import ConfigDict
@@ -11,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy.orm import as_declarative
 from sqlalchemy.orm import validates
+
 
 from src.utils import generate_slug_by_name
 
@@ -103,3 +105,10 @@ class NamingMixin:
 
 class CategoryMixin(NamingMixin):
     url_image: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
+
+    @validates("url_image")
+    def check_url(self, key, url):
+        if not validators.url(url):
+            raise ValueError("Incorrect url image")
+        return url
+
